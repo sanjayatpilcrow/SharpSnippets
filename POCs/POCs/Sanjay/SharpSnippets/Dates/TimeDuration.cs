@@ -13,10 +13,6 @@
 */
 using System;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace POCs.Sanjay.SharpSnippets.Dates
 {
@@ -71,11 +67,15 @@ namespace POCs.Sanjay.SharpSnippets.Dates
         }
         #endregion //constructor
 
+        #region properties
         public bool IsValidDuration
         {
             get { return start <= end; }
         }
         public TimeSpan Duration { get { return end - start; } }
+        #endregion //properties
+
+        #region public methods
         public TimeSpan IntersectingSpan(TimeDuration other)
         {
             return getIntersection(other).Duration;
@@ -84,6 +84,9 @@ namespace POCs.Sanjay.SharpSnippets.Dates
         {
             return getIntersection(other);
         }
+        #endregion //public methods
+
+        #region private methods
         private TimeDuration getIntersection(TimeDuration other)
         {
             if (this.Equals(other) || other == null) return this;
@@ -91,6 +94,7 @@ namespace POCs.Sanjay.SharpSnippets.Dates
             DateTime iEnd = this.End < other.End ? this.End : other.End;
             return iStart < iEnd ? new TimeDuration(iStart, iEnd) : new TimeDuration();
         }
+        #endregion //private methods
 
         #region Equatable
         public bool Equals(TimeDuration CompareWith)

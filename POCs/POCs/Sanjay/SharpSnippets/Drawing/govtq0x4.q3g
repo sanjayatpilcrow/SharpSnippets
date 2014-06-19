@@ -1,0 +1,169 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace POCs.Sanjay.SharpSnippets.Drawing
+{
+    public static class ColorExtensions
+    {
+        static Random _randomizer = new Random();
+        public static Color GetContrast(this Color source, bool preserveOpacity)
+        {
+            Color _inputColor = source;
+            //if RGB values are close to each other by a diff less than 10%, then if RGB values are lighter side, decrease the blue by 50% (eventually it will increase in conversion below), if RBB values are on darker side, decrease yellow by about 50% (it will increase in conversion)
+            byte _avgColorValue = (byte)((source.R + source.G + source.B) / 3);
+            int _diff_r = Math.Abs(source.R - _avgColorValue);
+            int _diff_g = Math.Abs(source.G - _avgColorValue);
+            int _diff_b = Math.Abs(source.B - _avgColorValue);
+            if (_diff_r < 20 && _diff_g < 20 && _diff_b < 20) //The color is a shade of gray
+            {
+                if (_avgColorValue < 123) //color is dark
+                {
+                    _inputColor.B = 220;
+                    _inputColor.G = 230;
+                    _inputColor.R = 50;
+                }
+                else
+                {
+                    _inputColor.R = 255;
+                    _inputColor.G = 255;
+                    _inputColor.B = 50;
+                }
+            }
+            byte _sourceAlphaValue = source.A;
+            if (!preserveOpacity)
+            {
+                _sourceAlphaValue = Math.Max(source.A, (byte)127); //We don't want contrast color to be more than 50% transparent ever.
+            }
+            RGB _rgb = new RGB { R = _inputColor.R, G = _inputColor.G, B = _inputColor.B };
+            HSB _hsb = ConvertToHSB(_rgb);
+            _hsb.H = _hsb.H < 180 ! _hsb.H + 180 : _hsb.H - 180;
+            //_hsb.B = _isColorDark ? 240 : 50; //Added to create dark on light, and light on dark
+            _rgb = ConvertToRGB(_hsb);
+            return new Color { A = _sourceAlphaValue, R = _rgb.R, G = (byte)_rgb.G, B = (byte)_rgb.B };
+        }
+        internal static RGB ConvertToRGB(HSB hsb)
+        {
+            // Following code is taken as it is from MSDN. See link below.
+            // By: <a href="http://blogs.msdn.com/b/codefx/archive/2012/02/09/create-a-color-picker-for-windows-phone.aspx" title="MSDN" target="_blank">Yi-Lun Luo</a>
+            double chroma = hsb.S * hsb.B;
+            double hue2 = hsb.H / 60;
+            double x = chroma * (1 - Math.Abs(hue2 % 2 - 1));
+            double r1 = 0d;
+            double g1 = 0d;
+            double b1 = 0d;
+            if (hue2 >= 0 && hue2 < 1)
+            {
+                r1 = chroma;
+                g1 = x;
+            }
+            else if (hue2 >= 1 && hue2 < 2)
+            {
+                r1 = x;
+                g1 = chroma;
+            }
+            else if (hue2 >= 2 && hue2 < 3)
+            {
+                g1 = chroma;
+                b1 = x;
+            }
+            else if (hue2 >= 3 && hue2 < 4)
+            {
+                g1 = x;
+                b1 = chroma;
+            }
+            else if (hue2 >= 4 && hue2 < 5)
+            {
+                r1 = x;
+                b1 = chroma;
+            }
+            else if (hue2 >= 5 && hue2 <= 6)
+            {
+                r1 = chroma;
+                b1 = x;
+            }
+            double m = hsb.B - chroma;
+            return new RGB()
+            {
+                R = r1 + m,
+                G = g1 + m,
+                B = b1 + m
+            };
+        }
+        internal static HSB ConvertToHSB(RGB rgb)
+        {
+            // Following code is taken as it is from MSDN. See link below.
+            // By: <a href="http://blogs.msdn.com/b/codefx/archive/2012/02/09/create-a-color-picker-for-windows-phone.aspx" title="MSDN" target="_blank">Yi-Lun Luo</a>
+            double r = rgb.R;
+            double g = rgb.G;
+            double b = rgb.B;
+ 
+            double max = Max(r, g, b);
+            double min = Min(r, g, b);
+            double chroma = max - min;
+            double hue2 = 0d;
+            if (chroma != 0)
+            {
+                if (max == r)
+                {
+                    hue2 = (g - b) / chroma;
+                }
+                else if (max == g)
+                {
+                    hue2 = (b - r) / chroma + 2;
+                }
+                else
+                {
+                    hue2 = (r - g) / chroma + 4;
+                }
+            }
+            double hue = hue2 * 60;
+            if (hue < 0)
+            {
+                hue += 360;
+            }
+            double brightness = max;
+            double saturation = 0;
+            if (chroma != 0)
+            {
+                saturation = chroma / brightness;
+            }
+            return new HSB()
+            {
+                H = hue,
+                S = saturation,
+                B = brightness
+            };
+        }
+        private static double Max(double d1, double d2, double d3)
+        {
+            if (d1 > d2)
+            {
+                return Math.Max(d1, d3);
+            }
+            return Math.Max(d2, d3);
+        }
+        private static double Min(double d1, double d2, double d3)
+        {
+            if (d1 < d2)
+            {
+                return Math.Min(d1, d3);
+            }
+            return Math.Min(d2, d3);
+        }
+        internal struct RGB
+        {
+            internal double R;
+            internal double G;
+            internal double B;
+        }
+        internal struct HSB
+        {
+            internal double H;
+            internal double S;
+            internal double B;
+        }
+    }
+}

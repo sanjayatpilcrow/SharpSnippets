@@ -34,6 +34,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,6 +46,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sanjay\SharpSnippets\Dates\TimeDuration.cs" />
+    <Compile Include="Sanjay\SharpSnippets\Drawing\ColorExtensions.cs" />
+    <Compile Include="Sanjay\SharpSnippets\Geometry\GeometryExtensions.cs" />
+    <Compile Include="Sanjay\SharpSnippets\Strings\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

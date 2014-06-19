@@ -17,19 +17,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using POCs.Sanjay.SharpSnippets.Dates;
+using POCs.Sanjay.SharpSnippets.Geometry;
+using POCs.Sanjay.SharpSnippets.Strings;
+using POCs.Sanjay.SharpSnippets.Drawing;
+using System.Drawing;
 
 namespace POCs.Sanjay.SharpSnippets
 {
     class Program
     {
         #region example control switches
-        static bool playExampleDuration, playExampleDateExtensions = false;
+        static bool playExampleDuration, playExampleColorExtensions, playExampleGeometrySizeScale, playExampleSafeSubString = false;
         #endregion example control switches
         static void Main(string[] args)
         {
-            //set the switch for respective exampl to run
+            //set the switch for respective example to run
+            #region Run example control
+            playExampleGeometrySizeScale = false;
             playExampleDuration = false;
-            
+            playExampleColorExtensions = true;
+            playExampleSafeSubString = false;
+            #endregion //run example control
+
             #region TimeDuration test
             if (playExampleDuration)
             {
@@ -48,6 +57,45 @@ namespace POCs.Sanjay.SharpSnippets
                 Console.WriteLine("---End: Duration Example---");
             }
             #endregion TimeDuration test
+
+            #region GeometrySizeScale
+            if (playExampleGeometrySizeScale)
+            {
+                Size OriginalSize = new Size(93, 37);
+                Size ScaleTo = new Size(200, 200);
+                Size ScaledSize = OriginalSize.MaintainAspectAndScale(new Size(200, 200));
+                Console.WriteLine("---Start: Size Scale Example---");
+                Console.WriteLine("Original Size: H-{0},W{1}", OriginalSize.Height, OriginalSize.Width);
+                Console.WriteLine("Maintain aspect and scale Original To: H-{0},W{1}", ScaleTo.Height, ScaleTo.Width);
+                Console.WriteLine("Scaled Size: H-{0},W{1}", ScaledSize.Height, ScaledSize.Width);
+                Console.WriteLine("---End: Size Scale Example---");
+            }
+            #endregion //GeometrySizeScale
+
+            #region safe subString
+            if(playExampleSafeSubString)
+            {
+                string text = "123456";
+                int start = 2, length = 6;
+                Console.WriteLine("---Start: SafeSubString Example---");
+                Console.WriteLine("Substring from {0}, starting @ {1} with length {2} is {3}", text, start, length, text.SafeSubstring(start, length));
+                start = 7; length = 2;
+                Console.WriteLine("Substring from {0}, starting @ {1} with length {2} is {3}", text, start, length, text.SafeSubstring(start, length));
+                Console.WriteLine("---Start: SafeSubString Example---");
+            }
+            #endregion //safe subString
+
+            #region Contrast color
+            if (playExampleColorExtensions)
+            {
+                Console.WriteLine("---Start: Contrast color example---");
+                Color color = Color.DarkRed;
+                Color contrast = color.GetContrast(true);
+                Console.WriteLine("Original : R-{0}, G-{1}, B-{2}", color.R, color.G,color.B);
+                Console.WriteLine("Contrast : R-{0}, G-{1}, B-{2}", contrast.R, contrast.G, contrast.B);
+                Console.WriteLine("---End: Contrast color example---");
+            }
+            #endregion //Contrast color
 
             Console.ReadKey();
         }
