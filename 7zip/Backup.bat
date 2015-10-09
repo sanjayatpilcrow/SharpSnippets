@@ -35,7 +35,7 @@ start /b /wait powershell.exe -nologo -sta -command "IF ([console]::CapsLock -eq
 powershell -Command $pword = read-host "Enter password" -AsSecureString ; $BSTR=[System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($pword) ; [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR) > .tmp.txt & set /p password=<.tmp.txt & del .tmp.txt
 powershell -Command $pword = read-host "Confirm" -AsSecureString ; $BSTR=[System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($pword) ; [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR) > .tmp.txt & set /p password2=<.tmp.txt & del .tmp.txt
 
-IF %password%==%password2% 7z.exe a -t7z yyyymmddhhmm_Dhundhliya_S_D.7z Docs source -mhe=on -p%password% -xr!bin -xr!obj -xr!werMain\platforms
+IF %password%==%password2% 7z.exe a -t7z yyyymmddhhmm_Dhundhliya_S_D.7z Docs source -mhe=on -p%password% -xr!bin -xr!obj -xr!temp\test
 IF NOT %password%==%password2% echo Password do not match
 pause
 
