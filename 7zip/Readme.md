@@ -7,9 +7,9 @@ This little batch file creates password protected 7z archive of the specified fo
 Copy backup.bat file in the folder which has the subfolders you want to archive. Navigate to the folder in explorer and open command prompt in the same folder. Type backup.bat at the command prompt and follow the instructions.
 
 ######Requirements
-7zip (http://www.7-zip.org/)
-Powershell (Windows7 up, all versions have powershell by default)
-7zip executable path in global path variable (start > advanced system settings > Advanced.Environment Veriables > PATH > include 7zip executable path, usually it is %PROGRAMFILES%\7ZIP;)
+* 7zip (http://www.7-zip.org/)
+* Powershell (Windows7 up, all versions have powershell by default)
+* 7zip executable path in global path variable (start > advanced system settings > Advanced.Environment Veriables > PATH > include 7zip executable path, usually it is %PROGRAMFILES%\7ZIP;)
 
 ######Tweaks
 Following is the default 7zip command in the batch file - 
