@@ -2,7 +2,7 @@ echo off
 REM .------------------------------------------------------------------------------------------------------------
 REM : Author  : Sanjay Sharma
 REM : Date    : 201510092141
-REM : License : GPL
+REM : License : Creative Commons Attribution 4.0 International license (http://creativecommons.org/licenses/by/4.0/)
 REM :
 REM :------------------------------------------------------------------------------------------------------------
 echo ====Quick archive utility=====
