@@ -14,6 +14,6 @@ Copy backup.bat file in the folder which has the subfolders you want to archive.
 ######Tweaks
 Following is the default 7zip command in the batch file - 
 
-`7z.exe a -t7z yyyymmddhhmm_Dhundhliya_S_D.7z Docs source -mhe=on -p%password% -xr!bin -xr!obj -x!temp/test`
+`7z.exe a -t7z yyyymmddhhmm_filename.7z Docs source -mhe=on -p%password% -xr!bin -xr!obj -x!temp/test`
 
 "Docs Source" specify the two folders - docs and source, to archive. You can add/change folders to include here. "-xr!bin -xr!obj -x!temp/test" specify 3 folders to exclude from archive - bin, obj, and temp/test. "r" switch in obj and bin denotes that bin and obj folder could be anywhere in the folder structure.
