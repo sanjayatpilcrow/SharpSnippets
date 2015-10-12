@@ -9,13 +9,13 @@ echo ====Quick archive utility=====
 echo .----------------------------------------------------------
 echo :          I   M  P  O  R  T  A  N  T
 echo :----------------------------------------------------------
-echo :     This only archives source and doc folder and excludes bin and obj folders, if they exist in source or doc.
+echo :     This only archives source and doc folder and excludes bin,obj and temp/test folders, if they exist in source or doc.
 echo :     For all folders in this directory, use BackupAll.bat
-echo :     This guy always makes yyyymmddhhmm_Dhundhliya_S_D.7z in current folder. 
+echo :     This guy always makes yyyymmddhhmm_filename.7z in current folder. 
 echo :            Change name and copy somewhere else or upload!
 echo :     Run this from command prompt, not direclty from Windows Explorer!!!!!
-echo :     Copy local archive in C:\Data\pilcrow\dhundhliya\bkps
-echo :     Upload to OneDrive : SanjayKCSharma.live.in
+echo :     Copy local archive in [folder name]
+echo :     Upload to OneDrive : [one drive]
 echo :     
 echo :     
 echo :     
